@@ -17,6 +17,7 @@ export default class MessageContainer extends React.Component {
 
     this.renderRow = this.renderRow.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
     this.renderScrollComponent = this.renderScrollComponent.bind(this);
 
@@ -81,6 +82,13 @@ export default class MessageContainer extends React.Component {
     return null;
   }
 
+  renderUserHeader() {
+    if (this.props.renderHeader) {
+      return this.props.renderHeader(this.props);
+    }
+    return null;
+  }
+
   renderLoadEarlier() {
     if (this.props.loadEarlier === true) {
       const loadEarlierProps = {
@@ -94,6 +102,10 @@ export default class MessageContainer extends React.Component {
       );
     }
     return null;
+  }
+
+  renderHeader() {
+    return [this.renderLoadEarlier(), this.renderUserHeader()]
   }
 
   scrollTo(options) {
@@ -150,7 +162,7 @@ export default class MessageContainer extends React.Component {
 
           renderRow={this.renderRow}
           renderHeader={this.renderFooter}
-          renderFooter={this.renderLoadEarlier}
+          renderFooter={this.renderHeader}
           renderScrollComponent={this.renderScrollComponent}
         />
       </View>
@@ -162,6 +174,7 @@ MessageContainer.defaultProps = {
   messages: [],
   user: {},
   renderFooter: null,
+  renderHeader: null,
   renderMessage: null,
   listViewProps: {},
   onLoadEarlier: () => {
@@ -172,6 +185,7 @@ MessageContainer.propTypes = {
   messages: React.PropTypes.array,
   user: React.PropTypes.object,
   renderFooter: React.PropTypes.func,
+  renderHeader: React.PropTypes.func,
   renderMessage: React.PropTypes.func,
   onLoadEarlier: React.PropTypes.func,
   listViewProps: React.PropTypes.object,
