@@ -106,6 +106,12 @@ class GiftedChat extends React.Component {
     this.initLocale();
     this.setMessages(messages || []);
     this.setTextFromProp(text);
+
+    this.setKeyboardHeight(this.props.initialKeyboardHeight);
+    const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard()
+    this.setState({
+      messagesContainerHeight: newMessagesContainerHeight,
+    });
   }
 
   componentWillUnmount() {
@@ -514,6 +520,7 @@ GiftedChat.defaultProps = {
   }),
   loadEarlier: false,
   onLoadEarlier: () => {},
+  initialKeyboardHeight: 0,
   isLoadingEarlier: false,
   renderLoading: null,
   renderLoadEarlier: null,
@@ -564,6 +571,7 @@ GiftedChat.propTypes = {
   loadEarlier: PropTypes.bool,
   onLoadEarlier: PropTypes.func,
   isLoadingEarlier: PropTypes.bool,
+  initialKeyboardHeight: PropTypes.number,
   renderLoading: PropTypes.func,
   renderLoadEarlier: PropTypes.func,
   renderAvatar: PropTypes.func,
